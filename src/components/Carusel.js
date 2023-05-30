@@ -1,6 +1,6 @@
 import Carousel from 'react-material-ui-carousel';
-import { Paper, Button, Box, Typography } from '@mui/material';
-import banner1 from '../images/banner/banner1-PhotoRoom.png-PhotoRoom.png';
+import { Button, Box, Typography } from '@mui/material';
+import banner1 from '../images/banner/banner1.png';
 import banner2 from '../images/banner/banner2.jpg';
 import { shades } from '../theme/theme';
 

@@ -34,12 +34,12 @@ export default function Header() {
               </Typography>
               <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
                 <a href="/about" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  About us
+                  About
                 </a>
               </Typography>
               <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
                 <a href="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  Contact us
+                  Contact
                 </a>
               </Typography>
             </div>

@@ -2,12 +2,21 @@ import { Box } from '@mui/material';
 // import Banner from '../components/Banner';
 import { shades } from '../theme/theme';
 import Carusel from '../components/Carusel';
+import CategoriesList from '../components/CategoriesList';
+import ProductsList from '../components/ProductsList';
+
 
 export default function Home() {
-    return (
+    return (<>
         <Box marginTop = '100px' >
-            <Carusel />
+            {/* <Carusel /> */}
         </Box>
+        <Box marginTop = '100px' >
+            <CategoriesList />
+            <ProductsList />
+        </Box>
+    </>
+        
         // <Box sx={{
         //     display: 'flex',
         //     flexDirection: 'column',
@@ -20,5 +29,3 @@ export default function Home() {
         // </Box>
     )
 }
-
-// display={'flex'} justifyContent={'center'}
