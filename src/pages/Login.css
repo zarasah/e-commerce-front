@@ -27,6 +27,28 @@
     font-size: 16px;
   }
 
+  input.button {
+    font-family: 'Merriweather', serif;
+    text-transform: uppercase;
+    outline: 0;
+    background-color: rgb(245, 172, 107);
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 16px;
+    transition: all 0.3 ease;
+    cursor: pointer;
+  }
+  
+  input.button:hover,.button:active,.button:focus {
+    background: rgb(241, 158, 86);
+  }
+
+  input.button:disabled {
+    background: rgb(255, 206, 163);
+  }
+
   .form button {
     font-family: 'Merriweather', serif;
     text-transform: uppercase;
@@ -56,11 +78,31 @@
     text-decoration: none;
   }
 
-  .error {
-    display: none;
+  .form .message a:hover {
+    color: rgb(252, 138, 38);
+    text-decoration: none;
   }
 
-  .error-active {
-    display: block;
+  .error:empty {
+    margin: 0;
+  }
+
+  .error {
+    margin-top: -15px;
     color: red;
   }
+
+  .error span {
+    float: left;
+    margin-left: 10px;
+    font-size: 14px;
+  }
+
+  /* .error {
+    display: none;
+  } */
+
+  /* .error-active {
+    display: block;
+    color: red;
+  } */
