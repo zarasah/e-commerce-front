@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.2",
     "react-material-ui-carousel": "^3.4.2",
+    "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "redux-saga": "^1.2.3",

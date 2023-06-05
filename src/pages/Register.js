@@ -1,14 +1,21 @@
 import './Login.css';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { registrationRequest } from '../store/registrationSlice';
 
 export default function Register() {
+    const dispatch = useDispatch();
+    const isLoading = useSelector((state) => state.registration.isLoading);
+    const isSuccess = useSelector((state) => state.registration.isSuccess);
+    const error = useSelector((state) => state.registration.error);
+
     const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
         mode: 'onChange'
     });
 
     function onSubmit(data) {
-        console.log(data); // here will be dispatcher and we will send data to the server
+        dispatch(registrationRequest(data));
         reset();
     }
         
@@ -18,7 +25,7 @@ export default function Register() {
                 <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
                     <input 
                         type="text"
-                        placeholder="First Name"
+                        placeholder="First Name*"
                         {
                             ...register('firstname', {
                                 required: 'Fisrt name is required',
@@ -39,7 +46,7 @@ export default function Register() {
                     />
                     <input 
                         type="text" 
-                        placeholder="Email Address"
+                        placeholder="Email Address*"
                         {
                             ...register('email', {
                                 required: 'Email is required',
@@ -53,7 +60,7 @@ export default function Register() {
                     <div className='error'>{errors?.email && <span>{errors?.email?.message || 'Errors'}</span>}</div>
                     <input 
                         type="password" 
-                        placeholder="Password"
+                        placeholder="Password*"
                         {
                             ...register('password', {
                                 required: 'Password is required',
@@ -70,11 +77,13 @@ export default function Register() {
                     />
                     <div className='error'>{errors?.password && <span>{errors?.password?.message || 'Errors'}</span>}</div>
                     <input className = 'button' type = 'submit' disabled = {!isValid}/>
-                    {/* <button disabled = {!isValid}>create</button> */}
+                    {/* <button disabled = {!isValid}>{loading ? 'Submitting...' : 'Submit'}</button> */}
                     <p className="message">Already registered? <Link to = "/login">Sign In</Link></p>
                 </form>
                 <div>
-                    <p className="message"><Link to = "/login">Go to login page</Link></p>
+                    {isLoading && <p>Loading...</p>}
+                    {isSuccess && <p>Registration successful!</p>}
+                    {error && <p>Error: {error}</p>}
                 </div>
             </div>
         </div>
