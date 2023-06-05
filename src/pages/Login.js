@@ -1,20 +1,38 @@
 import './Login.css';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequest } from '../store/loginSlice'; 
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
     const navigate = useNavigate();
-    const [isError, setIsError] = useState(false);
+    const dispatch = useDispatch();
+
+    const isLoading = useSelector((state) => state.login.isLoading);
+    const error = useSelector((state) => state.login.error);
+    const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         mode: 'onChange'
     });
 
     function onSubmit(data) {
-        console.log(data); // here will be dispatcher and we will send data to the server
+        dispatch(loginRequest(data));
         reset();
     }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const role = localStorage.getItem('role');
+            console.log('role', role)
+            if (role === '1') {
+                navigate('/admin');
+            } else if (role === '0') {
+                navigate('/user');
+            }
+        }
+      }, [isAuthenticated, navigate]);
     
     return (
         <div className = "login-page">
@@ -44,9 +62,9 @@ export default function Login() {
                         }
                     />
                     <div className='error'>{errors?.password && <span>{errors?.password?.message || 'Errors'}</span>}</div>
-                    <button>Sign In</button>
+                    <button disabled={isLoading}>Sign In</button>
                     <p className = "message" >Not registered? <Link to = "/register">Create an account</Link></p>
-                    <p className = {isError ? "error-active" : "error"}></p>
+                    <p className = {error ? "error-active" : "error"}>{error}</p>
                 </form>
             </div>
         </div>
