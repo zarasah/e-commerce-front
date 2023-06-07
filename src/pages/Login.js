@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest } from '../store/loginSlice'; 
 import { useNavigate, Link } from "react-router-dom";
+// import { logout } from '../store/loginSlice';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -21,18 +22,25 @@ export default function Login() {
         dispatch(loginRequest(data));
         reset();
     }
-
+    
     useEffect(() => {
         if (isAuthenticated) {
             const role = localStorage.getItem('role');
-            console.log('role', role)
             if (role === '1') {
                 navigate('/admin');
             } else if (role === '0') {
                 navigate('/user');
             }
         }
-      }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate]);
+
+    // useEffect(() => {
+    //     return () => {
+    //         if (!isAuthenticated) {
+    //             dispatch(logout());
+    //         }
+    //     };
+    // }, [isAuthenticated, dispatch]);
     
     return (
         <div className = "login-page">
@@ -135,3 +143,15 @@ export default function Login() {
 //         </div>
 //     )
 // }
+
+
+
+// const role = localStorage.getItem('role')
+//     console.log('role', role)
+//     useEffect(() => {
+//         if(true) {
+//             console.log('useEffect')
+            
+//             // navigate('/')
+//         }
+//     }, [isAuthenticated, navigate])

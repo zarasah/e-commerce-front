@@ -15,9 +15,9 @@ export const login = async (data) => {
             return data;
         }  else {
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Login failed');
+            throw new Error(errorData.error || 'Invalid email or password');
         }
     } catch (error) {
-        throw new Error(error.message || 'Login failed');
+        throw new Error(error.message || 'Invalid email or password');
     }
 }

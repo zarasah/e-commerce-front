@@ -7,7 +7,7 @@ function* handleRegistration(action) {
         yield call(registerUser, action.payload);
         yield put(registrationSuccess())
     } catch (error) {
-        yield put(registrationFailure(error.message));
+        yield put(registrationFailure(error));
     }
 }
 

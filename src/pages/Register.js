@@ -9,7 +9,7 @@ export default function Register() {
     const isLoading = useSelector((state) => state.registration.isLoading);
     const isSuccess = useSelector((state) => state.registration.isSuccess);
     const error = useSelector((state) => state.registration.error);
-
+    
     const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
         mode: 'onChange'
     });
@@ -83,7 +83,7 @@ export default function Register() {
                 <div>
                     {isLoading && <p>Loading...</p>}
                     {isSuccess && <p>Registration successful!</p>}
-                    {error && <p>Error: {error}</p>}
+                    {error && <p>Error: {error.message}</p>}
                 </div>
             </div>
         </div>

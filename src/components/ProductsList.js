@@ -3,8 +3,7 @@ import { Grid, Card, CardContent, CardMedia, Typography  } from '@mui/material';
 
 export default function ProductsList() {
     const products = useSelector((state) => state.product.products);
-    console.log(products)
-   
+   console.log('products', products)
     return (
         <Grid container spacing={2}>
       {products.map((product) => (

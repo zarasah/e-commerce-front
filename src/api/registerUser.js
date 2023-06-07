@@ -8,15 +8,24 @@ const registerUser = (userData) => {
     })
         .then((res) => {
             if (!res.ok) {
-                throw new Error('Registration failed');
-            } else {
-                console.log('then registerUser', res)
+                if (res.status === 409) {
+                    throw new Error('Email already exists');
+                } else {
+                    return res.json()
+                }
+            }
+        })
+        .then(result => {
+            if (result.error) {
+                const errorMessage = result.error[0].message;
+                throw new Error(errorMessage);
             }
         })
         .catch((error) => {
-            console.log('catch registerUser', error)
+            console.log('catch registerUser', error);
             throw new Error(error.message);
-        })
+        }
+    )
 }
 
 export default registerUser;

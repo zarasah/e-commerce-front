@@ -17,9 +17,7 @@ const productSlice = createSlice({
             state.error = null;
         },
         fetchProductsSuccess: (state, action) => {
-            console.log('fetchProductsSuccess')
             state.isLoading = false;
-            console.log('action', action.payload)
             state.products = action.payload;
             console.log(state.products)
         },
@@ -32,12 +30,12 @@ const productSlice = createSlice({
             state.error = null;
         },
         fetchProductByIdSuccess: (state, action) => {
-        state.isLoading = false;
-        state.product = action.payload;
+            state.isLoading = false;
+            state.product = action.payload;
         },
         fetchProductByIdFailure: (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 })

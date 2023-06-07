@@ -9,15 +9,13 @@ import ProductsList from '../components/ProductsList';
 import { useDispatch } from 'react-redux';
 import { fetchProductsRequest } from '../store/productSlice';
 
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('useEffect')
-        dispatch(fetchProductsRequest());
-        console.log('end useEffect')
-        
+        dispatch(fetchProductsRequest());        
     }, [dispatch]);
 
     return (<>
@@ -28,6 +26,7 @@ export default function Home() {
             <CategoriesList />
             <ProductsList />
         </Box>
+        <Link to = '/user/dashboard'>Go to Dashboard</Link>
     </>
         
         // <Box sx={{

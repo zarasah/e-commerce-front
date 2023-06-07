@@ -11,18 +11,15 @@ const registrationSlice = createSlice({
     initialState,
     reducers: {
         registrationRequest: (state) => {
-            console.log('you are in Request')
             state.isLoading = true;
             state.error = null;
             state.inSuccess = false;
         },
         registrationSuccess: (state) => {
-            console.log('you are in Success')
             state.isLoading = false;
             state.isSuccess = true;
         },
         registrationFailure: (state, action) => {
-            console.log('you are in Failure')
             state.isLoading = false;
             state.error = action.payload;
         }
