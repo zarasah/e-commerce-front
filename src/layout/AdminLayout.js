@@ -1,3 +1,4 @@
+import '../App.css';
 import { Outlet, Navigate, Link } from 'react-router-dom';
 import Header from '../components/header/Header';
 import Dashboard from '../pages/Dashboard';
@@ -5,21 +6,16 @@ import Dashboard from '../pages/Dashboard';
 export default function AdminLayout() {
     const role = localStorage.getItem('role')
     const jwt = localStorage.getItem('jwt')
-    console.log('role',role)
-    if (jwt && role) {
+    
+    if (jwt && role === '1') {
         return (
-            <>
-            
-            {/* <Header /> */}
-            <div>
-                <h1>HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</h1>
-                <h1>HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</h1>
-            </div>
-            <Link to = '/'>Go Home</Link>
-            <Link to = 'dashboard'>Go to dashboard</Link>
-            <Outlet />
-            </>
-            
+            // <div className='wrapper'>
+            //     <div>
+            //         Hello Admin
+            //     </div>
+            //     <Outlet />
+            // </div>
+            <Navigate to="/" replace={true} />
         )
     } else {
         return <Navigate to="/login" replace={true} />

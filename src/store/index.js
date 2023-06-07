@@ -4,10 +4,12 @@ import rootSaga from '../sagas';
 import registrationReducer from "./registrationSlice";
 import loginReducer from './loginSlice';
 import productReducer from './productSlice';
+import categoryReducer from './categorySlice';
 
 const rootReducer = combineReducers({
     registration: registrationReducer,
     product: productReducer,
+    category: categoryReducer,
     login: loginReducer,
 });
 

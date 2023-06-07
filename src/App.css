@@ -18,3 +18,9 @@
   padding: 30px;
   width: 40%;
 } */
+
+.wrapper {
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+}

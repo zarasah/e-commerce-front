@@ -3,7 +3,12 @@ import { Container, Box } from '@mui/material';
 import Header from "./components/header/Header";
 import CommonLayout from './layout/CommonLayout';
 import AdminLayout from './layout/AdminLayout';
+import UserLayout from './layout/UserLayout';
 import Home from "./pages/Home";
+import Shop from './pages/Shop';
+import Blog from './pages/Blog';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
@@ -19,11 +24,18 @@ function App() {
               <Routes>
                 <Route element = {<CommonLayout />}>
                   <Route path = "/" element = {<Home />} />
+                  <Route path = "/shop" element = {<Shop />} />
+                  <Route path = "/blog" element = {<Blog />} />
+                  <Route path = "/about" element = {<About />} />
+                  <Route path = "/contact" element = {<Contact />} />
                   <Route path = "/login" element = {<Login />}/>
                   <Route path = "/register" element = {<Register />}/>
                   <Route path = "*" element={<NotFound />}/>
-                  <Route path = "/user" element = {<AdminLayout />} >
+                  <Route path = "/admin" element = {<AdminLayout />} >
                     <Route path = "dashboard" element = {<Dashboard />} />
+                  </Route>
+                  <Route path = "/user" element = {<UserLayout />} >
+                    <Route path = "cart" element = {<Dashboard />} />
                   </Route>
                 </Route>                
               </Routes>

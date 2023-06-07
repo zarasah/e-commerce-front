@@ -7,18 +7,29 @@ const registerUser = (userData) => {
         body: JSON.stringify(userData),
     })
         .then((res) => {
-            if (!res.ok) {
-                if (res.status === 409) {
+            if (res.ok) {
+                console.log('Registration successful:', res);
+                return res.json();
+            } else if (res.status === 409) {
                     throw new Error('Email already exists');
-                } else {
-                    return res.json()
-                }
+            } else {
+                    return res.json();
             }
-        })
+                
+        }
+            // if (!res.ok) {
+            //     if (res.status === 409) {
+            //         throw new Error('Email already exists');
+            //     } else {
+            //         return res.json()
+            //     }
+            // } else {
+            //     console.log('Registration successful:', res);
+            // }
+        )
         .then(result => {
-            if (result.error) {
-                const errorMessage = result.error[0].message;
-                throw new Error(errorMessage);
+            if (result && result.error && result.error[0].message) {
+                throw new Error(result.error[0].message);
             }
         })
         .catch((error) => {

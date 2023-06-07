@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, IconButton, InputBase, Badge, InputAdornment, Button} from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, InputBase, Badge, InputAdornment, Button, Avatar, Menu, MenuItem} from '@mui/material';
 import { Search } from '@mui/icons-material';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
 import { useNavigate } from 'react-router-dom';
@@ -7,18 +7,30 @@ import { shades } from '../../theme/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../store/loginSlice';
+import { useState } from 'react';
 
 export default function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [anchorEl, setAnchorEl] = useState(false);
 
     const isAuthenticated = useSelector((state) => state.login.isAuthenticated)
-    console.log('isAuthenticated', isAuthenticated)
+    const userName = localStorage.getItem('username');
+    const role = localStorage.getItem('role');
 
     function handleLogout() {
+      setAnchorEl(false);
       dispatch(logout());
       navigate('/');
     }
+
+    function handleMenuOpen(event) {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    function handleMenuClose() {
+      setAnchorEl(null);
+    };
 
     return (
         <AppBar position="fixed" sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'rgb(248, 248, 248)',  boxShadow: 'none', marginBottom: '10px' }}>
@@ -77,13 +89,32 @@ export default function Header() {
             {/* Login Button */}
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem' }}>
               {
-                isAuthenticated ? <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick={handleLogout}>Logout</Button> : <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick = {() => {navigate('/login')}}>
-                Login
-              </Button>
+                isAuthenticated ? (
+                  (
+                    <div>
+                      <Avatar style={{
+                        backgroundColor: 'rgb(245, 172, 107)',
+                        textTransform: 'uppercase',
+                        cursor: 'pointer',
+                        // color: 'black',
+                      }} 
+                      onClick={handleMenuOpen}>{userName.charAt(0)}</Avatar>
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleMenuClose}
+                      >
+                        <MenuItem>My Account</MenuItem>
+                        {role === '1' && <MenuItem>Dashboard</MenuItem>}
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      </Menu>
+                    </div>
+                  )
+                ) : (
+                <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick = {() => {navigate('/login')}}>
+                  Login
+                </Button>)
               }
-              {/* <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick = {() => {navigate('/login')}}>
-                Login
-              </Button>  */}
             </div>
     
             {/* Shopping Cart */}
@@ -108,17 +139,28 @@ export default function Header() {
 }
 
 
+
 // import { AppBar, Toolbar, Typography, IconButton, InputBase, Badge, InputAdornment, Button} from '@mui/material';
 // import { Search } from '@mui/icons-material';
 // import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
 // import { useNavigate } from 'react-router-dom';
 // import logo from '../../images/logo.jpg';
 // import { shades } from '../../theme/theme';
-// import { useDispatch } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
+// import { logout } from '../../store/loginSlice';
 
 // export default function Header() {
 //     const navigate = useNavigate();
+//     const dispatch = useDispatch();
+
+//     const isAuthenticated = useSelector((state) => state.login.isAuthenticated)
+//     console.log('isAuthenticated', isAuthenticated)
+
+//     function handleLogout() {
+//       dispatch(logout());
+//       navigate('/');
+//     }
 
 //     return (
 //         <AppBar position="fixed" sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'rgb(248, 248, 248)',  boxShadow: 'none', marginBottom: '10px' }}>
@@ -131,29 +173,29 @@ export default function Header() {
 //                 alignItems: 'center', 
 //                 marginRight: 'auto' }}>
 //               <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
-//                 <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+//                 <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
 //                   Home
-//                 </a>
+//                 </Link>
 //               </Typography>
 //               <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
-//                 <a href="/shop" style={{ color: 'inherit', textDecoration: 'none' }}>
+//                 <Link to="/shop" style={{ color: 'inherit', textDecoration: 'none' }}>
 //                   Shop
-//                 </a>
+//                 </Link>
 //               </Typography>
 //               <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
-//                 <a href="/blog" style={{ color: 'inherit', textDecoration: 'none' }}>
+//                 <Link to="/blog" style={{ color: 'inherit', textDecoration: 'none' }}>
 //                   Blog
-//                 </a>
+//                 </Link>
 //               </Typography>
 //               <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
-//                 <a href="/about" style={{ color: 'inherit', textDecoration: 'none' }}>
+//                 <Link to="/about" style={{ color: 'inherit', textDecoration: 'none' }}>
 //                   About
-//                 </a>
+//                 </Link>
 //               </Typography>
 //               <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
-//                 <a href="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>
+//                 <Link to="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>
 //                   Contact
-//                 </a>
+//                 </Link>
 //               </Typography>
 //             </div>
     
@@ -176,9 +218,14 @@ export default function Header() {
 
 //             {/* Login Button */}
 //             <div style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem' }}>
-//               <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick = {() => {navigate('/login')}}>
+//               {
+//                 isAuthenticated ? <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick={handleLogout}>Logout</Button> : <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick = {() => {navigate('/login')}}>
 //                 Login
-//               </Button> 
+//               </Button>
+//               }
+//               {/* <Button variant="text" sx={{ textTransform: 'none', fontSize: '16px' }} onClick = {() => {navigate('/login')}}>
+//                 Login
+//               </Button>  */}
 //             </div>
     
 //             {/* Shopping Cart */}
