@@ -18,7 +18,7 @@ export default function Home() {
         dispatch(fetchProductsRequest());        
     }, [dispatch]);
 
-    return (<>
+    return (<div>
         <Box marginTop = '100px' >
             {/* <Carusel /> */}
         </Box>
@@ -27,7 +27,7 @@ export default function Home() {
             <ProductsList />
         </Box>
         <Link to = '/user/dashboard'>Go to Dashboard</Link>
-    </>
+    </div>
         
         // <Box sx={{
         //     display: 'flex',

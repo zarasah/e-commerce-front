@@ -18,6 +18,18 @@ export default function Header() {
     const userName = localStorage.getItem('username');
     const role = localStorage.getItem('role');
 
+    function handleMyAccount() {
+      console.log('MYACCOUNT')
+      if (role === '0') {
+        console.log('FirstIF')
+        navigate('/user/account');
+      } else if (role === '1') {
+        console.log('SecondIf')
+        navigate('/admin/account');
+      }
+
+    }
+
     function handleLogout() {
       setAnchorEl(false);
       dispatch(logout());
@@ -104,7 +116,7 @@ export default function Header() {
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                       >
-                        <MenuItem>My Account</MenuItem>
+                        <MenuItem onClick={handleMyAccount}>My Account</MenuItem>
                         {role === '1' && <MenuItem>Dashboard</MenuItem>}
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </Menu>

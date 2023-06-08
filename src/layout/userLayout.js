@@ -8,9 +8,6 @@ export default function UserLayout() {
     if (jwt && role === '0') {
         return (
             <div className='wrapper'>
-                <div>
-                    Hello User
-                </div>
                 <Outlet />
             </div>
             

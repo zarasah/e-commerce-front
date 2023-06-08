@@ -7,10 +7,11 @@ function* handleLogin(action) {
     try {
         // yield put(loginRequest());
         const response = yield call(login, action.payload);
-        const { jwt, role, name } = response;
+        const { jwt, role, name, id } = response;
         localStorage.setItem('jwt', jwt);
         localStorage.setItem('role', role);
         localStorage.setItem('username', name);
+        localStorage.setItem('id', id);
         yield put(loginSuccess());
     } catch (error) {
         yield put(loginFailure(error.message));
