@@ -6,13 +6,15 @@ import loginReducer from './loginSlice';
 import productReducer from './productSlice';
 import categoryReducer from './categorySlice';
 import userReducer from './userSlice';
+import cartReducer from './cartSlice';
 
 const rootReducer = combineReducers({
     registration: registrationReducer,
     product: productReducer,
     category: categoryReducer,
     login: loginReducer,
-    user: userReducer
+    user: userReducer,
+    cart: cartReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

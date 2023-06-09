@@ -16,20 +16,12 @@ const registerUser = (userData) => {
                     return res.json();
             }
                 
-        }
-            // if (!res.ok) {
-            //     if (res.status === 409) {
-            //         throw new Error('Email already exists');
-            //     } else {
-            //         return res.json()
-            //     }
-            // } else {
-            //     console.log('Registration successful:', res);
-            // }
-        )
+        })
         .then(result => {
             if (result && result.error && result.error[0].message) {
                 throw new Error(result.error[0].message);
+            } else {
+                return result;
             }
         })
         .catch((error) => {

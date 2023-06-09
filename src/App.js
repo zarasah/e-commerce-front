@@ -14,6 +14,7 @@ import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import Account from './pages/Account';
+import Cart from './pages/Cart';
 import ProductsList from './components/ProductsList';
 
 function App() { 
@@ -40,7 +41,7 @@ function App() {
                   <Route path = "/user" element = {<UserLayout />} >
                     <Route index element = {<Home />} />
                     <Route path = 'account' element = {<Account />} />
-                    <Route path = "cart" element = {<Dashboard />} />
+                    <Route path = "cart" element = {<Cart />} />
                   </Route>
                 </Route>                
               </Routes>
