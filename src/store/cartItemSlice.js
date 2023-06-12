@@ -38,7 +38,6 @@ const cartItemSlice = createSlice({
         cartItemUpdateSuccess: (state, action) => {
             state.isLoading = false;
             state.inSuccess = true;
-            console.log("action", action)
             state.cartItem = state.cartItem.map(item => {
                 if (item.id === action.payload.productId) {
                     item.count = action.payload.count

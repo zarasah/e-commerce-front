@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox, Button, Typography, Modal } from "@mui/material";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchcartItemsRequest, cartItemAddRequest, cartItemUpdateRequest } from '../store/cartItemSlice';
 
@@ -8,7 +8,6 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cartItem.cartItem);
-  console.log('PRODUCTS from CART', products)
   let cartItems = [];
   const userId = localStorage.getItem('id');
   
@@ -34,7 +33,6 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
       checked: item.checked
     }));
   }
- console.log('cartItems', cartItems)
   const buttobStyle = {
     background: 'rgb(245, 172, 107)',
     color: '#FFFFFF',
