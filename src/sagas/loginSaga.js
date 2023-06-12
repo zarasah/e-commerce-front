@@ -22,6 +22,7 @@ function handleLogout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
+    localStorage.removeItem('id');
   }
 
 function* loginSaga() {

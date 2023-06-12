@@ -17,7 +17,7 @@ const registrationSlice = createSlice({
         },
         registrationSuccess: (state) => {
             state.isLoading = false;
-            state.isSuccess = true;
+            state.inSuccess = true;
         },
         registrationFailure: (state, action) => {
             state.isLoading = false;

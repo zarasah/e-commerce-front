@@ -158,7 +158,7 @@ export default function Header() {
           </IconButton>
           <Drawer anchor="right" open={isCartOpen} onClose={handleCartToggle}>
             <div> 
-              <Cart closeDrawer={closeDrawer}/>
+              <Cart closeDrawer={closeDrawer} isOpenInDrawer = 'true'/>
             </div>
           </Drawer>
         </Toolbar>
