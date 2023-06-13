@@ -67,5 +67,50 @@ export function addToCart(data) {
       })
       .then(data => data);
   }
+
+  export function deleteCheckedCartItems(data) {
+    const userId = data.userId;
+    const productsIds = data.productsIds;
+    const token = localStorage.getItem('jwt');
+    const body = { productsIds };
+    return fetch(`${BASE_URL}/basket/deletefromcart?userId=${userId}`,  {
+      method: 'DELETE',
+        headers: { 
+            'Content-Type': 'application/json',
+            "Authorization": token
+        },
+        body: JSON.stringify(body),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to create cart');
+        }
+        return response.json();
+      })
+      .then(data => data);
+  }
+
+  export function deleteAllCartItems(data) {
+    const userId = data;
+    const productsIds = [];
+    const token = localStorage.getItem('jwt');
+    const body = { productsIds };
+
+    return fetch(`${BASE_URL}/basket/deletefromcart?userId=${userId}`,  {
+      method: 'DELETE',
+        headers: { 
+            'Content-Type': 'application/json',
+            "Authorization": token
+        },
+        body: JSON.stringify(body),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to create cart');
+        }
+        return response.json();
+      })
+      .then(data => data);
+  }
   
   // export default addToCart;

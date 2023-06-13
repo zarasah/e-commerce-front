@@ -8,8 +8,14 @@ import {
     cartItemUpdateFailure,
     fetchcartItemsRequest,
     fetchcartItemsSuccess,
-    fetchcartItemsFailure } from '../store/cartItemSlice';
-import { addToCart, updateCartItem, fetchCartItems } from '../api/cartItemApi';
+    fetchcartItemsFailure,
+    deleteCheckedCartItemsRequest,
+    deleteCheckedCartItemsSuccess,
+    deleteCheckedCartItemsFailure,
+    deleteAllCartItemsRequest,
+    deleteAllCartItemsSuccess,
+    deleteAllCartItemsFailure } from '../store/cartItemSlice';
+import { addToCart, updateCartItem, fetchCartItems, deleteAllCartItems, deleteCheckedCartItems } from '../api/cartItemApi';
 
 function* handleCartItemAdd(action) {
     try {
@@ -42,10 +48,30 @@ function* handleFetchCartItems(action) {
     }
 }
 
-function* loginSaga() {
+function* handleDeleteAllCartItems(action) {
+    try {
+        yield call(deleteAllCartItems, action.payload);
+        yield put(deleteAllCartItemsSuccess());
+    } catch (error) {
+        yield put(deleteAllCartItemsFailure(error.message));
+    }
+}
+
+function* handledeleteCheckedCartItems(action) {
+    try {
+        yield call(deleteCheckedCartItems, action.payload);
+        yield put(deleteCheckedCartItemsSuccess());
+    } catch (error) {
+        yield put(deleteCheckedCartItemsFailure(error.message));
+    }
+}
+
+function* watchCartItem() {
     yield takeEvery(cartItemAddRequest.type, handleCartItemAdd);
     yield takeEvery(cartItemUpdateRequest.type, handleCartItemUpdate);
     yield takeEvery(fetchcartItemsRequest.type, handleFetchCartItems);
+    yield takeEvery(deleteAllCartItemsRequest.type, handleDeleteAllCartItems);
+    yield takeEvery(deleteCheckedCartItemsRequest.type, handledeleteCheckedCartItems);
 }
   
-  export default loginSaga;
+  export default watchCartItem;

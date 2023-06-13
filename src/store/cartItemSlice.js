@@ -63,7 +63,43 @@ const cartItemSlice = createSlice({
         fetchcartItemsFailure: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
-        }
+        },
+        toggleCheck: (state, action) => {
+            const itemId = action.payload;
+            state.cartItem.forEach(item => {
+              if (item.id === itemId) {
+                item.checked = !item.checked;
+              }
+            });
+        },
+        deleteCheckedCartItemsRequest: (state) => {
+            state.inSuccess = false;
+            state.error = null;
+            state.inSuccess = false;
+        },
+        deleteCheckedCartItemsSuccess: (state, action) => {
+            state.isLoading = false;
+            state.inSuccess = true;
+            state.cartItem = state.cartItem.filter(item => !item.checked);;
+        },
+        deleteCheckedCartItemsFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        deleteAllCartItemsRequest: (state) => {
+            state.inSuccess = false;
+            state.error = null;
+            state.inSuccess = false;
+        },
+        deleteAllCartItemsSuccess: (state, action) => {
+            state.isLoading = false;
+            state.inSuccess = true;
+            state.cartItem = [];
+        },
+        deleteAllCartItemsFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
     }
 })
 
@@ -76,8 +112,14 @@ export const {
     cartItemUpdateFailure,
     fetchcartItemsRequest,
     fetchcartItemsSuccess,
-    fetchcartItemsFailure
-
+    fetchcartItemsFailure,
+    toggleCheck,
+    deleteCheckedCartItemsRequest,
+    deleteCheckedCartItemsSuccess,
+    deleteCheckedCartItemsFailure,
+    deleteAllCartItemsRequest,
+    deleteAllCartItemsSuccess,
+    deleteAllCartItemsFailure
 } = cartItemSlice.actions;
 
 export default cartItemSlice.reducer;

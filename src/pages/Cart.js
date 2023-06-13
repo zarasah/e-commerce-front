@@ -2,7 +2,13 @@ import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox, Button, Typography, Modal } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchcartItemsRequest, cartItemAddRequest, cartItemUpdateRequest } from '../store/cartItemSlice';
+import { 
+  fetchcartItemsRequest, 
+  cartItemAddRequest, 
+  cartItemUpdateRequest, 
+  toggleCheck, 
+  deleteAllCartItemsRequest, 
+  deleteCheckedCartItemsRequest } from '../store/cartItemSlice';
 
 function Cart({ closeDrawer, isOpenInDrawer }) {
   const navigate = useNavigate();
@@ -108,11 +114,25 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
     setCart(updatedCartItems);
   };
 
+  const handleDeleteCheckedForUser = () => {
+    const checkedProducts = products.filter(item => item.checked === true);
+    const productsIds = checkedProducts.map((item => item.id));
+    const data = {
+      userId,
+      productsIds,
+    }
+    dispatch(deleteCheckedCartItemsRequest(data));
+  };
+
   const handleDeleteAll = () => {
     const updatedCartItems = [];
 
     localStorage.removeItem('cart');
     setCart(updatedCartItems);
+  };
+
+  const handleDeleteAllForUser = () => {
+    dispatch(deleteAllCartItemsRequest(userId))
   };
 
   const handleToggleCheck = (itemId) => {
@@ -123,9 +143,12 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
       }
       return item;
     });
-    console.log("updatedCartItems", updatedCartItems)
     localStorage.setItem('cart', JSON.stringify(updatedCartItems));
     setCart(updatedCartItems);
+  };
+
+  const handleToggleCheckForUser = (itemId) => {
+    dispatch(toggleCheck(itemId));
   };
 
   const calculateTotalCount = () => {
@@ -160,7 +183,7 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
                     <TableCell>
                         <Checkbox
                             checked={item.checked || false}
-                            onChange={() => handleToggleCheck(item.id)}
+                            onChange={() => {userId ? handleToggleCheckForUser(item.id) : handleToggleCheck(item.id)}}
                         />
                     </TableCell>
                     <TableCell>{item.name}</TableCell>
@@ -181,8 +204,8 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
         display: 'flex',
         justifyContent: 'space-around'
       }}>
-        <Button onClick={handleDeleteCheckedProducts} style={buttobStyle}>Delete</Button>
-        <Button onClick={handleDeleteAll} style={buttobStyle}>Delete All</Button>
+        <Button onClick={userId ? handleDeleteCheckedForUser : handleDeleteCheckedProducts} style={buttobStyle}>Delete</Button>
+        <Button onClick={userId ? handleDeleteAllForUser : handleDeleteAll} style={buttobStyle}>Delete All</Button>
       </div>
       <Modal open={modalOpen} onClose={handleClose} style={{
         display: 'flex',
