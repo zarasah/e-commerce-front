@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { cartItemAddRequest } from '../store/cartItemSlice'; 
 
 export default function Item(props) {
-    const { name, price, img, id } = props.data;
+    const { name, price, image, id } = props.data;
     const [isActive, setActive] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     function handleMouseOver() {
         setActive(true);
@@ -14,6 +15,10 @@ export default function Item(props) {
 
     function handleMouseOut() {
         setActive(false);
+    }
+
+    function handelClick(id) {
+        navigate(`/product/${id}`)
     }
 
     function handleAddToCart(data) {
@@ -43,10 +48,10 @@ export default function Item(props) {
     return (
         <div className = "item" onMouseOver={handleMouseOver} onMouseOut = {handleMouseOut} >
             <div>
-                <Link to = {`${id}`}><img src = {img} alt = {name} className = "item-img"/></Link>
+                <img src = {image} alt = {name} className = "item-img" onClick={() => handelClick(id)}/>
             </div>
             <div className = "discrip">
-                <h4>{name}</h4>
+                <h4 onClick={() => handelClick(id)}>{name}</h4>
                 <p>$ {price} USD</p>
                 <input type = "submit" value = "ADD TO CART" className = {isActive ? 'add-btn-active' : 'add-btn'} onClick = {() => {handleAddToCart(props.data)}}/>
             </div>
@@ -55,3 +60,5 @@ export default function Item(props) {
 }
 
 // onClick = {() => {props.onHistory(props.data)}} ???
+
+

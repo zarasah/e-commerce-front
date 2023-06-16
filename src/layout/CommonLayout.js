@@ -19,12 +19,15 @@ export default function CommonLayout() {
     //     )
     // } else {
         return (
-            <>
+            <div style = {{
+                display: 'flex',
+                flexDirection: 'column'
+            }}>
                 <Header />
                 <div className = "wrapper">
                     <Outlet /> 
                 </div>                   
-            </>
+            </div>
         )
     }
 // }

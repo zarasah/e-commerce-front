@@ -27,7 +27,51 @@ async function getProductById(id) {
     }
 }
 
+async function createProduct(data) {
+    const token = localStorage.getItem('jwt');
+    return fetch(`${BASE_URL}/product/create`, {
+      method: 'POST',
+      headers: {
+        "Authorization": token,
+      },
+      body: data,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to create product');
+        }
+        return response.json();
+      })
+      .then((data) => data.data)
+      .catch((error) => {
+        throw new Error(`Error creating product: ${error.message}`);
+      });
+  }
+
+  function deleteProduct(id) {
+    const token = localStorage.getItem('jwt');
+    return fetch(`${BASE_URL}/product/delete?id=${id}`, {
+      method: 'DELETE',
+      headers: {
+        "Authorization": token,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to delete product');
+        }
+        return response.json();
+      })
+      .then((data) => data)
+      .catch((error) => {
+        throw new Error(`Error deleting product: ${error.message}`);
+      });
+  }
+
 export {
     getAllProducts,
-    getProductById
+    getProductById,
+    createProduct,
+    deleteProduct
 }

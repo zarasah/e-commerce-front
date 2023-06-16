@@ -36,6 +36,30 @@ const productSlice = createSlice({
         fetchProductByIdFailure: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        createProductRequest: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        createProductSuccess: (state, action) => {
+            state.isLoading = false;
+            state.products.push(action.payload);
+        },
+        createProductFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        deleteProductRequest: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        deleteProductSuccess: (state, action) => {
+            state.isLoading = false;
+            state.products = state.products.filter((item) => item.id !== action.payload);
+        },
+        deleteProductFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 })
@@ -47,5 +71,11 @@ export const {
     fetchProductByIdRequest,
     fetchProductByIdSuccess,
     fetchProductByIdFailure,
+    createProductRequest,
+    createProductSuccess,
+    createProductFailure,
+    deleteProductRequest,
+    deleteProductSuccess,
+    deleteProductFailure
   } = productSlice.actions;
   export default productSlice.reducer;

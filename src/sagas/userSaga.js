@@ -1,6 +1,21 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import { fetchUserRequest, fetchUserSuccess, fetchUserFailure } from '../store/userSlice';
-import fetchUserApi from '../api/userApi';
+import { 
+  fetchUsersRequest,
+  fetchUsersSuccess,
+  fetchUsersFailure,
+  fetchUserRequest, 
+  fetchUserSuccess, 
+  fetchUserFailure } from '../store/userSlice';
+import {fetchUserApi, fetchUsersApi} from '../api/userApi';
+
+function* fetchUsers(action) {
+  try {
+    const user = yield call(fetchUsersApi);
+    yield put(fetchUsersSuccess(user));
+  } catch (error) {
+    yield put(fetchUsersFailure(error.message));
+  }
+}
 
 function* fetchUser(action) {
   const userId = action.payload;
@@ -14,4 +29,5 @@ function* fetchUser(action) {
 
 export default function* watchFetchUser() {
   yield takeEvery(fetchUserRequest.type, fetchUser);
+  yield takeEvery(fetchUsersRequest.type, fetchUsers);
 }

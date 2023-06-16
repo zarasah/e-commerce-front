@@ -5,9 +5,15 @@ import {
     fetchProductsFailure,
     fetchProductByIdRequest,
     fetchProductByIdSuccess,
-    fetchProductByIdFailure
+    fetchProductByIdFailure,
+    createProductRequest,
+    createProductSuccess,
+    createProductFailure,
+    deleteProductRequest,
+    deleteProductSuccess,
+    deleteProductFailure
 } from '../store/productSlice';
-import { getAllProducts, getProductById } from "../api/productApi";
+import { getAllProducts, getProductById, createProduct, deleteProduct } from "../api/productApi";
 
 function* handleFetchProducts() {
     try{
@@ -27,9 +33,29 @@ function* handleFetchProductById(action) {
     }
 }
 
+function* handleCreateProduct(action) {
+    try{
+        const response = yield call(createProduct, action.payload);
+        yield put(createProductSuccess(response));
+    } catch (error) {
+        yield put(createProductFailure(error.message));
+    }
+}
+
+function* handleDeleteProduct(action) {
+    try {
+      yield call(deleteProduct, action.payload);
+      yield put(deleteProductSuccess(action.payload));
+    } catch (error) {
+      yield put(deleteProductFailure(error.message));
+    }
+  }
+
 function* productSaga() {
     yield takeEvery(fetchProductsRequest.type, handleFetchProducts);
     yield takeEvery(fetchProductByIdRequest.type, handleFetchProductById);
+    yield takeEvery(createProductRequest.type, handleCreateProduct);
+    yield takeEvery(deleteProductRequest.type, handleDeleteProduct);
 }
 
 export default productSaga;

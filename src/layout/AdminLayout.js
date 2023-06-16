@@ -13,10 +13,11 @@ export default function AdminLayout() {
         
         return (
             <>
-                <div className='wrapper'>
-                    {/* <Navigate to="/" replace={true} /> */}
+                <Outlet />
+                {/* <div className='wrapper'>
+                    <Navigate to="/" replace={true} />
                     <Outlet />
-                </div>
+                </div> */}
             </>
             
         )

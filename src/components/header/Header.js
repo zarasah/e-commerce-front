@@ -22,15 +22,15 @@ export default function Header() {
   const role = localStorage.getItem('role');
 
   function handleMyAccount() {
-    console.log('MYACCOUNT')
     if (role === '0') {
-      console.log('FirstIF')
       navigate('/user/account');
     } else if (role === '1') {
-      console.log('SecondIf')
       navigate('/admin/account');
     }
+  }
 
+  function handleDashboard() {
+    navigate('/admin/dashboard');
   }
 
   function handleLogout() {
@@ -56,7 +56,7 @@ export default function Header() {
   };
 
   return (
-      <AppBar position="fixed" sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'rgb(248, 248, 248)',  boxShadow: 'none', marginBottom: '10px' }}>
+      <AppBar position="fixed" sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'rgb(248, 248, 248)',  boxShadow: 'none', marginBottom: '10px', zIndex: 1201 }}>
         <Toolbar sx = {{width: "90%"}}>
           {/* Logo */}
           <img src={logo} alt="Logo" onClick = {() => navigate('/')} style={{ width: '150px', height: '70px', marginRight: '1rem', cursor: 'pointer' }} /> 
@@ -128,7 +128,7 @@ export default function Header() {
                       onClose={handleMenuClose}
                     >
                       <MenuItem onClick={handleMyAccount}>My Account</MenuItem>
-                      {role === '1' && <MenuItem>Dashboard</MenuItem>}
+                      {role === '1' && <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>}
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                   </div>
@@ -156,7 +156,7 @@ export default function Header() {
               <LocalMallRoundedIcon style={{ backgroundColor: shades.secondary[500], color: 'black' }} />
             </Badge>
           </IconButton>
-          <Drawer anchor="right" open={isCartOpen} onClose={handleCartToggle}>
+          <Drawer anchor="right" open={isCartOpen} onClose={handleCartToggle} sx = {{zIndex: 1201}}>
             <div> 
               <Cart closeDrawer={closeDrawer} isOpenInDrawer = 'true'/>
             </div>
