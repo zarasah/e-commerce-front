@@ -10,6 +10,12 @@ import {
   deleteAllCartItemsRequest, 
   deleteCheckedCartItemsRequest } from '../store/cartItemSlice';
 
+  const buttobStyle = {
+    background: 'rgb(245, 172, 107)',
+    color: '#FFFFFF',
+    cursor: 'pointer',
+  }
+
 function Cart({ closeDrawer, isOpenInDrawer }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,12 +45,7 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
       checked: item.checked
     }));
   }
-  const buttobStyle = {
-    background: 'rgb(245, 172, 107)',
-    color: '#FFFFFF',
-    cursor: 'pointer',
-  }
-
+  
     function handleCartClick() {
         const role = localStorage.getItem('role')
 
@@ -172,6 +173,7 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
             <TableRow>
                 <TableCell></TableCell>
                 <TableCell>Product Name</TableCell>
+                {!isOpenInDrawer && <TableCell>Image</TableCell>}
                 <TableCell>Price</TableCell>
                 <TableCell sx={{textAlign: 'center'}}>Count</TableCell>
                 <TableCell>Total Price</TableCell>
@@ -187,6 +189,11 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
                         />
                     </TableCell>
                     <TableCell>{item.name}</TableCell>
+                    {!isOpenInDrawer && 
+                      <TableCell>
+                        <img src={item.image} alt={item.name} style={{ width: '70px', height: '90px' }} />
+                      </TableCell>
+                    }
                     <TableCell>${item.price}</TableCell>
                     <TableCell sx={{textAlign: 'center'}}>
                     <Button onClick={() => {userId ? handleDecreaseCountForUser(item.id) :handleDecreaseCount(item.id)}}>-</Button>
@@ -206,6 +213,7 @@ function Cart({ closeDrawer, isOpenInDrawer }) {
       }}>
         <Button onClick={userId ? handleDeleteCheckedForUser : handleDeleteCheckedProducts} style={buttobStyle}>Delete</Button>
         <Button onClick={userId ? handleDeleteAllForUser : handleDeleteAll} style={buttobStyle}>Delete All</Button>
+        <Button style={buttobStyle}>Checkout</Button>
       </div>
       <Modal open={modalOpen} onClose={handleClose} style={{
         display: 'flex',

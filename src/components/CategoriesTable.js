@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 const CategoriesTable = () => {
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [rowData, setRowData] = useState('') 
+    const [rowData, setRowData] = useState('');
     const data = useSelector((state) => state.category.categories);
     
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -69,7 +69,7 @@ const CategoriesTable = () => {
       <Button variant="contained" onClick={handleOpenModal} style={{ marginBottom: '20px', textTransform: 'capitalize', backgroundColor: 'rgb(245, 172, 107)', color: "black", fontWeight: '600' }}>
         Add New Category
       </Button>
-      <TableContainer component={Paper}>
+      {data.length !== 0 && <TableContainer component={Paper}>
       <Table>
         <TableHead>
             <TableRow>
@@ -105,7 +105,7 @@ const CategoriesTable = () => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>}
 
     <Modal open={isModalOpen} onClose={handleCloseModal}>
     <Container maxWidth="md" 
@@ -125,7 +125,7 @@ const CategoriesTable = () => {
     >
         <div style={containerStyle}>
         <Typography variant="h3" component="h1" gutterBottom>Add New Category</Typography>
-        <form onSubmit={rowData ? handleSubmit(onUpdate) :handleSubmit(onSubmit)}>
+        <form onSubmit={rowData ? handleSubmit(onUpdate) : handleSubmit(onSubmit)}>
             <TextField
             name = "name"
             label="Name"

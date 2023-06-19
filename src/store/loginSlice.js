@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const isAuthenticated = !!localStorage.getItem('jwt');
+
 const initialState = {
     isLoading: false,
-    isAuthenticated: false,
+    isAuthenticated: isAuthenticated,
     error: null,
 }
 

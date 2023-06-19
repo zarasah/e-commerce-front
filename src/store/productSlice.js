@@ -12,7 +12,6 @@ const productSlice = createSlice({
     initialState,
     reducers: {
         fetchProductsRequest: (state) => {
-            console.log('fetchProductsRequest')
             state.isLoading = true;
             state.error = null;
         },
@@ -22,6 +21,18 @@ const productSlice = createSlice({
             console.log(state.products)
         },
         fetchProductsFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        fetchProductsByCategoryRequest: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        fetchProductsByCategorySuccess: (state, action) => {
+            state.isLoading = false;
+            state.products = action.payload;
+        },
+        fetchProductsByCategoryFailure: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         },
@@ -49,6 +60,18 @@ const productSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        updateProductRequest: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        updateProductSuccess: (state, action) => {
+            state.isLoading = false;
+            // state.products.push(action.payload);
+        },
+        updateProductFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
         deleteProductRequest: (state) => {
             state.isLoading = true;
             state.error = null;
@@ -68,12 +91,18 @@ export const {
     fetchProductsRequest,
     fetchProductsSuccess,
     fetchProductsFailure,
+    fetchProductsByCategoryRequest,
+    fetchProductsByCategorySuccess,
+    fetchProductsByCategoryFailure,
     fetchProductByIdRequest,
     fetchProductByIdSuccess,
     fetchProductByIdFailure,
     createProductRequest,
     createProductSuccess,
     createProductFailure,
+    updateProductRequest,
+    updateProductSuccess,
+    updateProductFailure,
     deleteProductRequest,
     deleteProductSuccess,
     deleteProductFailure

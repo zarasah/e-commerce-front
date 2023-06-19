@@ -1,13 +1,46 @@
 import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-// import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Button } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { cartItemAddRequest } from '../store/cartItemSlice';
 import './ProductPage.css';
 
+const buttobStyle = {
+  background: 'rgb(245, 172, 107)',
+  color: '#FFFFFF',
+  cursor: 'pointer',
+  textDecoration: 'none'
+}
+
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const productId = useParams().id;
   const products = useSelector(state => state.product.products);
   const product = products.find(item => item.id === +productId);
-    console.log(product)
+  
+  function handleAddToCart(data) {
+    const userId = localStorage.getItem('id');
+    if (userId) {
+        dispatch(cartItemAddRequest({userId, id: productId}));
+    } else {
+        const existingCart = JSON.parse(localStorage.getItem('cart'));
+        const cartArray = Array.isArray(existingCart) ? existingCart : [];
+
+        const targetIndex = cartArray.findIndex(item => item.product.id === productId);
+
+        if (targetIndex !== -1) {
+            cartArray[targetIndex].count++;
+        } else {
+            const newProduct = {
+                product: data,
+                count: 1
+            }
+            cartArray.push(newProduct);
+        }
+        localStorage.setItem('cart', JSON.stringify(cartArray));
+    }
+}
+
   return (
     <div className = "selected">
         <div className="selected-left">
@@ -17,25 +50,17 @@ const ProductDetails = () => {
             <h2>{product.name}</h2>
             <h5>Price $ {product.price} USA</h5>
             <p>{product.description}</p>
+            <div style = {{
+              marginTop: '2%',
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}>
+              <Button onClick={handleAddToCart} style={buttobStyle}>Add to Cart</Button>
+              <Button style={buttobStyle}><Link to = '/shop' style={buttobStyle}>Go to Shop</Link></Button>
+            </div>
         </div>
-        <Link to = '/shop'>Go to Shop</Link>
     </div>
 )
-//   return (
-//     <Card>
-//       <CardMedia
-//         component="img"
-//         alt={product.name}
-//         height="200"
-//         image={product.image}
-//       />
-//       <CardContent>
-//         <Typography variant="h5">{product.name}</Typography>
-//         <Typography variant="subtitle1">{product.price}</Typography>
-//         <Typography variant="body2">{product.description}</Typography>
-//       </CardContent>
-//     </Card>
-//   );
 };
 
 export default ProductDetails;

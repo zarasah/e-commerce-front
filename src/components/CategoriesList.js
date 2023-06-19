@@ -11,7 +11,8 @@ export default function QuiltedImageList() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            gap: '50px'
         }}>
             <Typography variant="body1" fontSize={50}>Categories</Typography>
             <Box sx={{ width: '80%', height: '500px', marginTop: '10px'}}>

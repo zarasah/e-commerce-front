@@ -21,6 +21,8 @@ export default function Shop() {
         dispatch(fetchCategoriesRequest());
     }, [dispatch]);
 
+    console.log('filtric heto', products)
+
     if (loading) {
         return <Typography>Loading...</Typography>;
     }

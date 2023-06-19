@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../store/loginSlice';
 import { useState } from 'react';
 import Cart from '../../pages/Cart';
+import { fetchProductsRequest } from '../../store/productSlice';
 
 export default function Header() {
   const [isCartOpen, setCartOpen] = useState(false);
@@ -24,13 +25,16 @@ export default function Header() {
   function handleMyAccount() {
     if (role === '0') {
       navigate('/user/account');
+      handleMenuClose();
     } else if (role === '1') {
       navigate('/admin/account');
+      handleMenuClose();
     }
   }
 
   function handleDashboard() {
     navigate('/admin/dashboard');
+    handleMenuClose();
   }
 
   function handleLogout() {
@@ -55,6 +59,10 @@ export default function Header() {
     setCartOpen(false);
   };
 
+  function handleShopClick() {
+    dispatch(fetchProductsRequest())
+  }
+
   return (
       <AppBar position="fixed" sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'rgb(248, 248, 248)',  boxShadow: 'none', marginBottom: '10px', zIndex: 1201 }}>
         <Toolbar sx = {{width: "90%"}}>
@@ -71,7 +79,7 @@ export default function Header() {
               </Link>
             </Typography>
             <Typography variant="body1" component="div" style={{ marginRight: '1rem', marginLeft: '1rem', color: shades.primary[500], fontSize: '18px', fontWeight: 'bold'}}>
-              <Link to="/shop" style={{ color: 'inherit', textDecoration: 'none' }}>
+              <Link to="/shop" style={{ color: 'inherit', textDecoration: 'none' }} onClick={handleShopClick}>
                 Shop
               </Link>
             </Typography>
