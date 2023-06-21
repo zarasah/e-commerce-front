@@ -20,11 +20,11 @@ export default function Footer() {
             <div className = "footer-center">
                 <h5>Shop</h5>
                 <ul>
-                    <li><Link to = "/#">All products</Link></li>
-                    <li><Link to = "/#">Accessories</Link></li>
-                    <li><Link to = "/#">Clothes</Link></li>
-                    <li><Link to = "/#">Perfume</Link></li>
-                    <li><Link to = "/#">Shoes</Link></li>
+                    <li><Link to = "/shop">All products</Link></li>
+                    <li><Link to = "/shop?category=Accessories">Accessories</Link></li>
+                    <li><Link to = "/shop?category=Clothes">Clothes</Link></li>
+                    <li><Link to = "/shop?category=Perfume">Perfume</Link></li>
+                    <li><Link to = "/shop?category=Shoes">Shoes</Link></li>
                 </ul>
             </div>
             <div className = "footer-right">

@@ -1,16 +1,15 @@
 import { Typography, List, ListItem, ListItemText } from '@mui/material';
-import { useDispatch} from 'react-redux';
-import { fetchProductsByCategoryRequest, fetchProductsRequest } from '../store/productSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ categories }) => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  function handleClick(id) {
-    dispatch(fetchProductsByCategoryRequest(id));
+  function handleClick(name) {
+    navigate(`/shop?category=${name}`);
   }
 
   function handleAllProductsClick() {
-    dispatch(fetchProductsRequest());
+    navigate('/shop');
   }
 
   return (
@@ -21,7 +20,7 @@ const Sidebar = ({ categories }) => {
             <ListItemText primary='All Products'/>
           </ListItem>
         {categories.map((category) => (
-          <ListItem key={category.id} onClick={() => handleClick(category.id)}>
+          <ListItem key={category.id} onClick={() => handleClick(category.name)}>
             <ListItemText primary={category.name} />
           </ListItem>
         ))}
