@@ -18,11 +18,6 @@ const MyAccount = () => {
     // dispatch(updateUser({ firstName, lastName, email, password }));
   };
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   dispatch(updateUser({ ...user, [name]: value }));
-  // };
-
   const containerStyle = {
     backgroundColor: 'rgb(248, 248, 248)',
     borderRadius: '10%',

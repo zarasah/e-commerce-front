@@ -22,6 +22,10 @@ const registrationSlice = createSlice({
         registrationFailure: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        updateinSuccess: (state) => {
+            state.error = null;
+            state.inSuccess = false;
         }
     }
 })
@@ -29,7 +33,8 @@ const registrationSlice = createSlice({
 export const {
     registrationRequest,
     registrationSuccess,
-    registrationFailure
+    registrationFailure,
+    updateinSuccess
 } = registrationSlice.actions;
 
 export default registrationSlice.reducer;

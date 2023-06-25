@@ -29,9 +29,7 @@ export default function Item(props) {
         } else {
             const existingCart = JSON.parse(localStorage.getItem('cart'));
             const cartArray = Array.isArray(existingCart) ? existingCart : [];
-
             const targetIndex = cartArray.findIndex(item => item.product.id === id);
-
             if (targetIndex !== -1) {
                 cartArray[targetIndex].count++;
             } else {
@@ -58,7 +56,5 @@ export default function Item(props) {
         </div>
     )
 }
-
-// onClick = {() => {props.onHistory(props.data)}} ???
 
 

@@ -112,5 +112,3 @@ export function addToCart(data) {
       })
       .then(data => data);
   }
-  
-  // export default addToCart;

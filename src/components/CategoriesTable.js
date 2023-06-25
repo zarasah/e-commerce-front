@@ -109,7 +109,6 @@ const CategoriesTable = () => {
 
     <Modal open={isModalOpen} onClose={handleCloseModal}>
     <Container maxWidth="md" 
-    // style={{ marginTop: '5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
     style={{
       position: 'fixed',
       top: '40%',
@@ -150,23 +149,6 @@ const CategoriesTable = () => {
         </div>
     </Container>
       </Modal> 
-
-    {/* <Modal open={isModalOpen} onClose={handleCloseModal}>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '20px' }}>
-          <div style = {{display: 'flex', flexDirection: 'column'}}>
-            <Typography variant="h6">Add New Category</Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="categoryName">Category Name:</label>
-              <input type="text" id="categoryName" name="categoryName" {...register('categoryName', { required: true })} />
-              {errors.categoryName && <span>This field is required</span>}
-              <div>
-                <button type="button" onClick={handleCloseModal}>Close</button>
-                <button type="submit">Submit</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </Modal> */}
     </div>
   );
 };

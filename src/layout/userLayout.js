@@ -1,5 +1,5 @@
 import '../App.css';
-import { Outlet, Navigate, Link } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 
 export default function UserLayout() {
     const role = localStorage.getItem('role')
@@ -7,10 +7,7 @@ export default function UserLayout() {
     
     if (jwt && role === '0') {
         return (
-            // <div className='wrapper'>
-                <Outlet />
-            // </div>
-            
+            <Outlet />            
         )
     } else {
         return <Navigate to="/login" replace={true} />

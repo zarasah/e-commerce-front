@@ -7,7 +7,6 @@ async function getAllProducts() {
       throw new Error('Failed to fetch products');
     }
         const data = await response.json();
-        console.log('DATA',data)
         return data;
     } catch (error) {
         throw new Error(error.message);
@@ -21,7 +20,6 @@ async function getProductByCategory(id) {
         throw new Error('Failed to fetch product');
       }
       const data = await response.json();
-      console.log('CATEGORY',data)
       return data;
   } catch (error) {
       throw new Error(error.message);
@@ -70,7 +68,6 @@ async function createProduct(data) {
       method: 'PUT',
       headers: {
         "Authorization": token,
-        // 'Content-Type': 'application/json',
       },
       body: body
     })
@@ -102,7 +99,6 @@ async function createProduct(data) {
         return response.json();
       })
       .then((data) => {
-        // const { createdAt, updatedAt, ...data } = res;
         return data;
       })
       .catch((error) => {

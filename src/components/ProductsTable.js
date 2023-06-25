@@ -1,12 +1,11 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Modal, Container, TextField, Button, TablePagination } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Modal, Container, TextField, Button, Pagination } from '@mui/material';
 import {  MenuItem } from '@mui/material';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsRequest, createProductRequest, updateProductRequest, deleteProductRequest } from '../store/productSlice';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
 const containerStyle = {
@@ -26,14 +25,19 @@ const CategoriesTable = () => {
     const options = useSelector((state) => state.category.categories);
     const fieldsForForm = !data.length ? ['name', 'price', 'quantity', 'description','image', 'Category'] : Object.keys(data[0]).filter((item) => (item !== 'id' && item !== 'createdAt' && item !== 'updatedAt' && item !== 'CategoryId'))
     
-    const { register, handleSubmit, reset, control, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
       mode: 'onChange'
   });
-  // const [selectedValue, setSelectedValue] = useState('');
+  
   const fileInputRef = useRef(null);
   const [selectedFileName, setSelectedFileName] = useState('');
   const [selectedFile, setSelectedFile] = useState('');
   const formData = new FormData();
+  const [page, setPage] = useState(1);
+  const count = Math.ceil(data.length / 6);
+  const startIndex = (page - 1) * 6;
+  const endIndex = startIndex + 6;
+  const displayedItems = data.slice(startIndex, endIndex);
 
   useEffect(() => {
     dispatch(fetchProductsRequest());
@@ -73,27 +77,12 @@ const CategoriesTable = () => {
         data: formData
       }
       dispatch(updateProductRequest(newData));
-      // dispatch(fetchProductsRequest());
     } else {
       dispatch(createProductRequest(formData));
     }
     handleCloseModal();
+    setPage(count)
   };
-
-  // const onSubmit = (data) => {
-  //   data.img = selectedFile;
-
-  //   for (const field in data) {
-
-  //     if (field === 'Category') {
-  //       formData.append('categoryId', data[field])
-  //     } else {
-  //       formData.append(field, data[field]);
-  //     }
-  //   }
-  //   dispatch(createProductRequest(formData));
-  //   handleCloseModal();
-  // };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -118,6 +107,11 @@ const CategoriesTable = () => {
     setIsEditModalOpen(true);
   }
 
+  const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+      window.scrollTo(0, 0);
+  };
+  
   return (
     <div style = {{paddingTop: '100px', width: '80%'}}>
       <Button variant="contained" onClick={handleOpenModal} style={{ marginBottom: '20px', textTransform: 'capitalize', backgroundColor: 'rgb(245, 172, 107)', color: "black", fontWeight: '600' }}>
@@ -140,7 +134,7 @@ const CategoriesTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((product) => (
+          {displayedItems.map((product) => (
             <TableRow key={product.id}>
               {Object.values(product).map((value) => {
                 if (value?.name) {
@@ -172,6 +166,21 @@ const CategoriesTable = () => {
         </TableBody>
       </Table>
     </TableContainer>}
+    <div>
+      {
+        data.length > 6 && (
+            <div className='pagination'>
+                <Pagination
+                    component="div"
+                    count={count}
+                    page={page}
+                    color="secondary"
+                    onChange={handleChangePage}
+                />
+            </div>
+        )
+      }
+    </div>
 
     <Modal open={isModalOpen} onClose={handleCloseModal}>
     <Container maxWidth="md" 
@@ -418,301 +427,6 @@ const CategoriesTable = () => {
         </div>
     </Container>
       </Modal>
-
-      {/* <Modal open={isEditModalOpen} onClose={handleCloseEditModal}>
-        <Container maxWidth="md"
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '2rem',
-            outline: 'none',
-          }}
-        >
-          <div style={containerStyle}>
-            <Typography variant="h3" component="h1" gutterBottom>Add New Product</Typography>
-            <form onSubmit={handleEditSubmit}>
-              
-              <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                <Button type="submit" variant="contained" color="secondary" sx={{color: 'white', '&:hover': {background: 'rgb(241, 158, 86)'}}}>
-                    Submit
-                </Button>
-                <Button variant="contained" color="secondary" sx={{color: 'white', '&:hover': {background: 'rgb(241, 158, 86)'}}} onClick={handleCloseEditModal}>
-                    Close
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Container>  
-      </Modal> */}
-
-      {/* <Modal open={isEditModalOpen} onClose={handleCloseEditModal}>
-    <Container maxWidth="md" 
-    style={{
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '2rem',
-      outline: 'none',
-    }}
-    >
-        <div style={containerStyle}>
-        <Typography variant="h3" component="h1" gutterBottom>Add New Product</Typography>
-        <form onSubmit={handleSubmit(handleEditSubmit)}>
-        <input 
-                        type="text" 
-                        placeholder="Last Name"
-                        {
-                            ...register('lastname')
-                        }
-                    /> */}
-          {/* {
-            fieldsForForm.map((item) => {
-              if (item === 'image') {
-                // return (
-                //   <>
-                //   <TextField 
-                //     // type='file'
-                //     key = {item}
-                //     name = {item}
-                //     label={item.charAt(0).toUpperCase() + item.slice(1)}
-                //     variant="outlined"
-                //     margin="normal"
-                //     fullWidth
-                //     InputLabelProps={{
-                //       shrink: true,
-                //     }}
-                //     // value={rowData[item]}
-                //     defaultValue={rowData[item]}
-                //     onClick={handleTextFieldClick}
-                //     InputProps={{
-                //       readOnly: true,
-                //     }}
-                //     // {...register('image', { required: true })} 
-                //   />
-                //   <input
-                //     type="file"
-                //     ref={fileInputRef}
-                //     style={{ display: 'none' }}
-                //     // {...register('image', { required: true })} 
-                //     onChange={handleFileInputChange}
-                //   />
-                //   </>
-                // )
-              } else if (item === 'Category') {
-                return (
-                  // Controller component from React Hook Form to handle the state and validation of the select field
-                  <Controller
-                      name="categoryId"
-                      control={control}
-                      // defaultValue=""
-                      defaultValue={rowData.CategoryId}
-                      rules={{ required: 'Category is required' }}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          select
-                          label="Category"
-                          variant="outlined"
-                          margin="normal"
-                          fullWidth
-                          error={Boolean(errors.categoryId)}
-                          helperText={errors.categoryId ? errors.categoryId.message : ''}
-                        >
-                          {options.map((option) => (
-                            <MenuItem key={option.id} value={option.id}>
-                              {option.name}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      )}
-                    />
-                )
-              } else if (item === 'price' || item === 'quantity'){
-                return (
-                  <TextField
-                    key = {item}
-                    name = {item}
-                    label={item.charAt(0).toUpperCase() + item.slice(1)}
-                    type="number"
-                    variant="outlined"
-                    margin="normal"
-                    // value={rowData[item]}
-                    defaultValue={rowData[item]}
-                    fullWidth
-                    required
-                    {...register(`${item}`, { required: true })}
-                    error={Boolean(errors[`${item}`])}
-                    helperText={errors[`${item}`] ? `${item} is required` : ''}
-                  />
-                )
-              } else {
-                return (
-                  <TextField
-                    key = {item}
-                    name = {item}
-                    label={item.charAt(0).toUpperCase() + item.slice(1)}
-                    variant="outlined"
-                    margin="normal"
-                    // value={rowData[item]}
-                    defaultValue={rowData[item]}
-                    fullWidth
-                    required
-                    {...register(`${item}`, { required: true })}
-                    error={Boolean(errors[`${item}`])}
-                    helperText={errors[`${item}`] ? `${item} is required` : ''}
-                  />
-                )
-              }
-            })
-          } */}
-            
-            {/* <div style={{display: 'flex', justifyContent: 'space-around'}}>
-              <Button type="submit" variant="contained" color="secondary" sx={{color: 'white', '&:hover': {background: 'rgb(241, 158, 86)'}}} onClick={handleCloseEditModal}>
-                  Submit
-              </Button>
-              <Button variant="contained" color="secondary" sx={{color: 'white', '&:hover': {background: 'rgb(241, 158, 86)'}}} onClick={handleCloseEditModal}>
-                  Close
-              </Button>
-            </div>
-        </form>
-        </div>
-    </Container>
-      </Modal>  */}
-
-      {/* <Modal open={isEditModalOpen} onClose={handleCloseEditModal}>
-    <Container maxWidth="md" 
-    style={{
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '2rem',
-      outline: 'none',
-    }}
-    >
-        <div style={containerStyle}>
-        <Typography variant="h3" component="h1" gutterBottom>Add New Product</Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {
-            fieldsForForm.map((item) => {
-              if (item === 'image') {
-                return (
-                  <>
-                  <TextField 
-                    // type='file'
-                    key = {item}
-                    name = {item}
-                    label={item.charAt(0).toUpperCase() + item.slice(1)}
-                    // defaultValue=""
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    value={rowData ? rowData[item] : selectedFileName}
-                    onClick={handleTextFieldClick}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                    {...register('image', { required: true })} 
-                  />
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    style={{ display: 'none' }}
-                    // {...register('image', { required: true })} 
-                    onChange={handleFileInputChange}
-                  />
-                  </>
-                )
-              } else if (item === 'Category') {
-                return (
-                  <TextField
-                      select
-                      label={item}
-                      // defaultValue={rowData ? rowData[item] : ''}
-                      value={rowData ? rowData.CategoryId : ''}
-                      variant="outlined"
-                      margin="normal"
-                      fullWidth
-                      required
-                      {...register(`${item}`, { required: true })}
-                      onChange={handleSelectChange}
-                      // error={Boolean(errors[`${item}`])}
-                      // helperText={errors[`${item}`] ? `${item} is required` : ''}
-                  >
-                    {options.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )
-              } else if (item === 'price' || item === 'quantity'){
-                return (
-                  <TextField
-                    key = {item}
-                    name = {item}
-                    label={item.charAt(0).toUpperCase() + item.slice(1)}
-                    type="number"
-                    variant="outlined"
-                    margin="normal"
-                    defaultValue={rowData ? rowData[item] : ''}
-                    fullWidth
-                    required
-                    {...register(`${item}`, { required: true })}
-                    error={Boolean(errors[`${item}`])}
-                    helperText={errors[`${item}`] ? `${item} is required` : ''}
-                  />
-                )
-              } else {
-                return (
-                  <TextField
-                    key = {item}
-                    name = {item}
-                    label={item.charAt(0).toUpperCase() + item.slice(1)}
-                    variant="outlined"
-                    margin="normal"
-                    defaultValue={rowData ? rowData[item] : ''}
-                    fullWidth
-                    required
-                    {...register(`${item}`, { required: true })}
-                    error={Boolean(errors[`${item}`])}
-                    helperText={errors[`${item}`] ? `${item} is required` : ''}
-                  />
-                )
-              }
-            })
-          }
-            
-            <div style={{display: 'flex', justifyContent: 'space-around'}}>
-              <Button type="submit" variant="contained" color="secondary" sx={{color: 'white', '&:hover': {background: 'rgb(241, 158, 86)'}}}>
-                  Submit
-              </Button>
-              <Button variant="contained" color="secondary" sx={{color: 'white', '&:hover': {background: 'rgb(241, 158, 86)'}}} onClick={handleCloseEditModal}>
-                  Close
-              </Button>
-            </div>
-        </form>
-        </div>
-    </Container>
-      </Modal>  */}
     </div>
   );
 };

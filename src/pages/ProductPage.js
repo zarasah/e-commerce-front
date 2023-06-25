@@ -18,25 +18,25 @@ const ProductDetails = () => {
   const products = useSelector(state => state.product.products);
   const product = products.find(item => item.id === +productId);
   
-  function handleAddToCart(data) {
+  function handleAddToCart() {
     const userId = localStorage.getItem('id');
     if (userId) {
         dispatch(cartItemAddRequest({userId, id: productId}));
     } else {
         const existingCart = JSON.parse(localStorage.getItem('cart'));
         const cartArray = Array.isArray(existingCart) ? existingCart : [];
-
         const targetIndex = cartArray.findIndex(item => item.product.id === productId);
 
         if (targetIndex !== -1) {
             cartArray[targetIndex].count++;
         } else {
             const newProduct = {
-                product: data,
+                product: product,
                 count: 1
             }
             cartArray.push(newProduct);
         }
+        
         localStorage.setItem('cart', JSON.stringify(cartArray));
     }
 }

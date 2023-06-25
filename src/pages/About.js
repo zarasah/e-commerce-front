@@ -51,23 +51,6 @@ function About() {
           </Container>
         </div>
       );
-//   return (
-//     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
-//       <Typography variant="h1" component="h1" color='rgb(245, 172, 107)' gutterBottom>About Us</Typography>
-//       <img src={about} alt="About Us" style={{ marginBottom: '1.5rem', maxWidth: '100%' }} />
-//       <Typography variant="body1" gutterBottom>
-//         Welcome to our e-commerce platform! We strive to provide the best online shopping experience for our customers.
-//         Our platform offers a wide range of products to choose from, ensuring that you find exactly what you're looking for.
-//       </Typography>
-//       <Typography variant="body1" gutterBottom>
-//         At our core, we value customer satisfaction and aim to deliver exceptional service. Our dedicated team works tirelessly
-//         to ensure that your shopping journey is smooth, secure, and enjoyable.
-//       </Typography>
-//       <Typography variant="body1">
-//         Whether you're a new customer or a returning one, we thank you for choosing our platform. Happy shopping!
-//       </Typography>
-//     </Container>
-//   );
 };
 
 export default About;

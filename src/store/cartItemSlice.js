@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     cartItem: [],
+    cartCount: 0,
     isLoading: false,
     error: null,
     inSuccess: false,
@@ -100,6 +101,9 @@ const cartItemSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        // updateCartCount: (state, action) => {
+        //     state.cartCount = action.payload;
+        // },
     }
 })
 
@@ -119,7 +123,8 @@ export const {
     deleteCheckedCartItemsFailure,
     deleteAllCartItemsRequest,
     deleteAllCartItemsSuccess,
-    deleteAllCartItemsFailure
+    deleteAllCartItemsFailure,
+    // updateCartCount
 } = cartItemSlice.actions;
 
 export default cartItemSlice.reducer;

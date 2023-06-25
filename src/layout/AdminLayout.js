@@ -14,47 +14,10 @@ export default function AdminLayout() {
         return (
             <>
                 <Outlet />
-                {/* <div className='wrapper'>
-                    <Navigate to="/" replace={true} />
-                    <Outlet />
-                </div> */}
             </>
             
         )
     } else {
         return <Navigate to="/login" replace={true} />
     }
-    
-    // console.log('you are in admin page')
-    // const jwt = localStorage.getItem('jwt');
-    // const role = localStorage.getItem('role');
-    // console.log(jwt, role)
-    // if (jwt) {
-    //     if (role === 0) {
-    //         console.log('you are checked')
-    //         return (
-    //             <div>
-    //                 <h1>Admin</h1>
-    //                 {/* <Header /> */}
-    //                 {/* <Dashboard /> */}
-    //                 {/* <Outlet /> */}
-    //             </div>
-    //         )
-    //     }
-    // }
-    // return <Navigate to="/login" replace={true} />;
 }
-
-
-// // import { Outlet } from 'react-router-dom';
-
-
-// export default function CommonLayout() {
-//     return (
-//         <>
-//             <div className = "wrapper">
-//                 <h1>Admin</h1>
-//             </div>                   
-//         </>
-//     )
-// }
